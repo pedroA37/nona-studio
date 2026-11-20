@@ -24,7 +24,12 @@ exploración y combate con estética de ilustración en tinta, donde cada pueblo
 
 <p align="center"><img src="media/embers_plaza.jpg" alt="La plaza del pueblo" width="720"></p>
 
-**Estado:** en desarrollo. Se descarga desde el NONA Launcher.
+**Estado del desarrollo.** El primer capítulo de tres está completo y se puede jugar de principio a fin. Las
+animaciones se encuentran en proceso de refinamiento. La versión 1.0 incluirá los tres capítulos y se publicará
+cuando el conjunto alcance el nivel de terminación buscado.
+
+**Participación.** Quienes deseen participar en las pruebas de la versión 1.0 pueden escribir a
+[pedroayal2812@gmail.com](mailto:pedroayal2812@gmail.com).
 
 ---
 
