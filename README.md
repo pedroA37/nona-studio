@@ -1,88 +1,60 @@
-<p align="center">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="media/logo_blanco.png">
-    <img src="media/logo_negro.png" alt="NONA Studio" width="460">
-  </picture>
-</p>
+<p align="center"><img src="media/portada.jpg" alt="Embers Remain" width="900"></p>
 
-<p align="center"><i>Never ordinary, never average.</i></p>
+<p align="center"><b>Español</b> · <a href="README_en.md">English</a></p>
 
----
+# Embers Remain
 
-## Embers Remain
+**Valdren, año 312 de la Llama.** Maelis vuelve al brezal donde ardieron las hogueras. Un RPG oscuro de exploración
+y combate con estética de ilustración en tinta, hecho en **Godot 4**.
 
-<p align="center"><img src="media/embers_portada.jpg" alt="Embers Remain" width="900"></p>
+**Estado:** el primer capítulo (Acto I) se puede jugar de principio a fin. La versión 1.0 incluirá los tres actos.
 
-**Valdren, año 312 de la Llama.** Maelis vuelve al brezal donde ardieron las hogueras. Un RPG oscuro de
-exploración y combate con estética de ilustración en tinta, donde cada pueblo guarda lo que el fuego no pudo borrar.
+<p align="center"><img src="media/brezal_dia.png" alt="Brezal de día" width="880"></p>
 
-- **Combate:** cuerpo a cuerpo en tiempo real, con un combo de tajo, estocada y patada, golpe pesado, esquiva,
-  bloqueo y contragolpe. Cada enemigo tiene su forma de atacar y de caer, y los jefes tienen fases propias.
-- **Oficios:** técnicas de 15 oficios distintos (guerrera, cazadora, hechicera, juglaresa, alquimista…).
-- **Mundo:** compañeras que se unen al viaje, misiones que cambian el pueblo, día y noche, clima, interiores con
-  varios pisos, pesca, forja y otros oficios.
+## El juego
 
-<p align="center"><img src="media/embers_plaza.jpg" alt="La plaza del pueblo" width="720"></p>
+- **Combate** cuerpo a cuerpo en tiempo real: combo de tajo, estocada y patada, golpe pesado, esquiva, bloqueo y
+  contragolpe. Cada enemigo ataca y cae a su manera, y los jefes tienen fases propias.
+- **Un pueblo vivo:** día y noche, clima, misiones que cambian el lugar, interiores con varios pisos, pesca y forja.
+- **Interfaz:** botones flotantes con la acción posible ([E] Hablar, Subir, Leer…), avisos de misión y de objetos, y
+  misiones terminadas tachadas en la mochila.
 
-**Estado del desarrollo.** El primer capítulo de tres está completo y se puede jugar de principio a fin. Las
-animaciones se encuentran en proceso de refinamiento. La versión 1.0 incluirá los tres capítulos y se publicará
-cuando el conjunto alcance el nivel de terminación buscado.
+| De día | De noche |
+|---|---|
+| <img src="media/brezal_dia.png" width="430"> | <img src="media/brezal_noche.png" width="430"> |
+| **Interiores con varios pisos** | **Combate** |
+| <img src="media/interior.png" width="430"> | <img src="media/combate.png" width="430"> |
 
-**Participación.** Quienes deseen participar en las pruebas de la versión 1.0 pueden escribir a
-[pedroayal2812@gmail.com](mailto:pedroayal2812@gmail.com).
+<p align="center"><img src="media/mochila.png" alt="Mochila y misiones" width="720"></p>
 
----
+## Cómo se hizo: guion humano, arte y animación con IA
 
-## Un experimento: guion humano, arte y animación con IA
+Embers Remain es también un experimento: **¿hasta dónde se puede llegar dibujando y animando un juego entero con
+IA, cuando la historia, los personajes y el diseño los escribe una persona?** Todo corre en local, en una sola PC.
 
-Embers Remain es también una prueba: **¿hasta dónde se puede llegar animando y dibujando un juego entero con
-IA, cuando la historia, los personajes y el diseño los escribe una persona?**
+1. **Personajes.** Del guion sale cada personaje de frente (FLUX.2 Klein). Recién cuando se aprueba, el mismo
+   modelo en modo edición hace la espalda y el perfil a partir de esa imagen, para que el diseño no cambie.
+2. **Esqueleto en 3D.** Con las tres vistas se arma un modelo en pose T (Hunyuan3D-2mv + Blender) y se anima con
+   Mixamo.
+3. **Guías.** Blender renderiza cada animación desde las tres cámaras del juego como video de profundidad y
+   esqueleto.
+4. **Animación.** Wan 2.1 VACE 14B toma la guía y la imagen del personaje y dibuja la animación cuadro por cuadro.
+5. **Revisión.** Cada tanda se mira en video; lo que falla se rehace. Lo aprobado se recorta y entra a Godot.
 
-La parte humana es el **guion, los personajes, los diálogos, el diseño del juego y la dirección de arte**: qué
-debe verse, qué está bien y qué hay que rehacer. Cada imagen y cada animación pasa por esa revisión antes de
-entrar al juego. La IA corre en local, en una sola PC, con [ComfyUI](https://github.com/comfyanonymous/ComfyUI).
+<p align="center"><img src="media/lamina_maelis.png" alt="Maelis: de la referencia al juego" width="880"></p>
+<p align="center"><img src="media/lamina_casas.png" alt="Edificios de Brezal" width="880"></p>
+<p align="center"><img src="media/lamina_noche.png" alt="Edificios de día y de noche" width="880"></p>
 
-```mermaid
-flowchart LR
-  G[Guion y diseño<br/>persona] --> R[Personaje de frente<br/>FLUX.2 Klein]
-  R -->|revisión| V[Espalda y perfil<br/>FLUX.2 Klein edición]
-  V --> M[Modelo 3D en pose T<br/>Hunyuan3D-2mv + Blender]
-  M --> X[Animaciones<br/>Mixamo]
-  X --> B[Guías por vista<br/>Blender: profundidad + esqueleto]
-  V --> W[Animación dibujada<br/>Wan 2.1 VACE 14B]
-  B --> W
-  W -->|revisión cuadro a cuadro| C[Recorte del fondo<br/>BiRefNet]
-  C --> J[Godot 4]
-```
+**Videos:** [tráiler](media/embers_remain_trailer.mp4) · [caminar y correr](media/maelis_caminar_y_correr.mp4) ·
+[personajes](media/personajes_acto1.mp4)
 
-**1. Personajes.** Del guion sale la descripción de cada personaje y FLUX.2 Klein (4B) dibuja su versión de
-frente. Recién cuando la persona la aprueba, el mismo modelo, en modo edición, hace la espalda y el perfil a partir
-de esa imagen, para que el diseño no cambie.
-`UNETLoader → CLIPLoader (Qwen3 4B) → ReferenceLatent (imagen aprobada) → Flux2Scheduler (4 pasos) → SamplerCustomAdvanced → VAEDecode`
+### Lo que aprendimos
 
-**2. Esqueleto en 3D.** Con las tres vistas, Hunyuan3D-2mv arma un modelo 3D en pose T que se limpia en Blender y
-se sube a Mixamo para darle las animaciones (caminar, correr, golpes, muertes…).
-
-**3. Guías.** Un script de Blender renderiza cada animación desde las tres cámaras del juego (frente, espalda y
-perfil puro) como video de **profundidad** y esqueleto. Si el personaje lleva un arma, la espada va atada al hueso
-de la mano en el 3D para que la guía ya la muestre en su lugar.
-
-**4. Animación.** Wan 2.1 VACE 14B toma el video guía y la imagen del personaje, y dibuja la animación en el estilo
-del juego, cuadro por cuadro.
-`UnetLoaderGGUF (Wan 2.1 VACE 14B Q4) + LoRA lightx2v → CLIPLoader (UMT5-XXL) → LoadVideo (guía) + LoadImage (personaje) → WanVaceToVideo → ModelSamplingSD3 → KSampler (6 pasos) → TrimVideoLatent → VAEDecode → SaveImage`
-
-**5. Revisión y juego.** Cada tanda se mira en video: cuerpo fuera de cuadro, manos o caras que cambian, armas
-que flotan… Lo que falla se rehace con otra semilla o con el pedido corregido. Lo aprobado se recorta con BiRefNet
-y pasa a Godot, que arma cada personaje con sus animaciones en las tres vistas.
-
-**Lo que aprendimos hasta ahora**
-- La IA respeta mucho más una **forma en la guía** que una descripción en el texto: la espada salió bien recién
-  cuando estuvo en el 3D, no cuando se la pedía con palabras.
+- La IA respeta mucho más una **forma en la guía** que una descripción en el texto.
 - Pedir las otras vistas **a partir de una imagen ya aprobada** mantiene el diseño; pedirlas desde cero lo cambia.
 - La revisión humana no se puede saltear: buena parte de lo generado se rehace al menos una vez.
 
 ---
 
-<sub>© 2026 NONA Studio. Todos los derechos reservados. Este repositorio es solo una vitrina: las imágenes, el arte,
-los textos, los personajes y los nombres «NONA Studio» y «Embers Remain» son propiedad de NONA Studio. No se permite
-copiarlos, redistribuirlos ni usarlos sin autorización escrita. El código y los juegos no se publican aquí.</sub>
+<sub>© 2026 NONA Studio. Todos los derechos reservados. Las imágenes, el arte, los textos, los personajes y los
+nombres «NONA Studio» y «Embers Remain» son propiedad de NONA Studio.</sub>
